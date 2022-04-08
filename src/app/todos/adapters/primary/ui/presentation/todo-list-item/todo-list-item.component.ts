@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 interface TodoListItem {
   id: string;
@@ -14,4 +20,15 @@ interface TodoListItem {
 })
 export class TodoListItemComponent {
   @Input() todo: TodoListItem;
+
+  @Output() deleteClicked = new EventEmitter<string>();
+  @Output() toggleClicked = new EventEmitter<string>();
+
+  onDeleteClicked() {
+    this.deleteClicked.emit(this.todo.id);
+  }
+
+  onToggle() {
+    this.toggleClicked.emit(this.todo.id);
+  }
 }

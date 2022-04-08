@@ -1,3 +1,20 @@
-{{ todo.id }}
-{{ todo.message }}
-{{ todo.done }}
+<div class="d-flex align-items-center justify-content-between p-3 bg-light m-2">
+  <div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [value]="todo.done"
+        (change)="onToggle()"
+        id="flexCheckDefault"
+      />
+      <label class="form-check-label" for="flexCheckDefault">
+        {{ todo.message }}
+      </label>
+    </div>
+  </div>
+  <button type="button" class="btn btn-danger" (click)="onDeleteClicked()">
+    Delete
+  </button>
+</div>
+

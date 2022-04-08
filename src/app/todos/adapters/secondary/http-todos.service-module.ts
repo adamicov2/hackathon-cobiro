@@ -16,10 +16,6 @@ import { SAVES_TODO_TO_STORAGE_DTO } from '../../application/ports/secondary/sav
       provide: GETS_ALL_TODOS_DTO,
       useExisting: HttpTodosService,
     },
-    {
-      provide: SAVES_TODO_TO_STORAGE_DTO,
-      useExisting: HttpTodosService,
-    },
   ],
 })
 export class HttpTodosServiceModule {}

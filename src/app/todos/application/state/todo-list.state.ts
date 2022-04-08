@@ -13,7 +13,7 @@ import {
 import { SAVES_TODO_TO_STORAGE_DTO } from '../ports/secondary/saves-todo-to-storage.dto-port';
 import { DeletesTodoCommandPort } from '../ports/primary/deletes-todo-command.port';
 import { ToggleTodoCommandPort } from '../ports/primary/toggle-todo.command-port';
-import { map, Observable, take } from 'rxjs';
+import { map, Observable, take, tap } from 'rxjs';
 import { GetsAllTodosQueryPort } from '../ports/primary/gets-all-todos.query-port';
 import { TodoQuery } from '../ports/primary/todo-query';
 
@@ -37,7 +37,7 @@ export class TodoListState
   loadAllTodos(): void {
     this._getAllTodosDto
       .getAllTodos()
-      .subscribe((todos) => this._savesTodoToStorageDto.save(todos));
+      .subscribe((todos) => this._savesTodoToStorageDto.save([...todos]));
   }
 
   deleteTodo(id: string): void {
@@ -63,14 +63,16 @@ export class TodoListState
   }
 
   getAll(): Observable<TodoQuery[]> {
-    return this._selectsTodoFromStorageDto
-      .select()
-      .pipe(
-        map((todosDto) =>
+    console.log('GetAll');
+    return this._selectsTodoFromStorageDto.select().pipe(
+      map((todosDto) => {
+        return (
+          todosDto &&
           todosDto
             .map(({ id, message, done }) => ({ id, message, done }))
             .sort((a, b) => Number(a.done) - Number(b.done))
-        )
-      );
+        );
+      })
+    );
   }
 }

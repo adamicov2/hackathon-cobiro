@@ -1,9 +1,10 @@
-import {InjectionToken, NgModule, TemplateRef} from '@angular/core';
+import {Injectable, InjectionToken, NgModule, TemplateRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SHOW_MODAL_COMMAND, ShowsModalCommandPort} from "../global-ports/shows-modal.command-port";
 import {HIDES_MODAL_COMMAND, HidesModalCommandPort} from "../global-ports/hides-modal.command-port";
 import {BsModalRef, BsModalService, ModalModule} from "ngx-bootstrap/modal";
 
+@Injectable()
 class NgxBoostrapModalService implements ShowsModalCommandPort, HidesModalCommandPort {
   private readonly _modalsMap = new Map<string, BsModalRef>([])
 

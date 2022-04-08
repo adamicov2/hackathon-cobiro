@@ -9,6 +9,8 @@ import { HttpTodosServiceModule } from './adapters/secondary/http-todos.service-
 import { HttpClientModule } from '@angular/common/http';
 import { TodosInMemoryStorageModule } from './adapters/secondary/todos.in-memory-storage.module';
 import { TodoListStateModule } from './application/state/todo-list.state.module';
+import { NgxBoostrapModalHexagonalModule } from '../core/ngx-boostrap-modal-hexagonal/ngx-boostrap-modal-hexagonal.module';
+import {ModalModule} from "ngx-bootstrap/modal";
 
 @NgModule({
   imports: [
@@ -19,6 +21,8 @@ import { TodoListStateModule } from './application/state/todo-list.state.module'
     HttpClientModule,
     TodoListStateModule,
     TodosInMemoryStorageModule,
+    NgxBoostrapModalHexagonalModule,
+    ModalModule,
   ],
   exports: [TodosContainerComponent, TodoCreateWidgetComponent],
   declarations: [
