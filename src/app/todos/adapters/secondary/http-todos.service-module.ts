@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { HttpTodosService } from './http-todos.service';
-import { CREATE_TODO_DTO } from '../../application/ports/secondary/creates-todo.dto-port';
-import { LOAD_ALL_TODOS_COMMAND } from '../../application/ports/primary/loads-all-todos-command.port';
-import { GETS_ALL_TODOS_DTO } from '../../application/ports/secondary/gets-all-todos.dto-port';
-import { SAVES_TODO_TO_STORAGE_DTO } from '../../application/ports/secondary/saves-todo-to-storage.dto-port';
+import {NgModule} from '@angular/core';
+import {HttpTodosService} from './http-todos.service';
+import {CREATE_TODO_DTO} from '../../application/ports/secondary/creates-todo.dto-port';
+import {GETS_ALL_TODOS_DTO} from '../../application/ports/secondary/gets-all-todos.dto-port';
+import {COMPLETE_TODO_PORT} from '../../application/ports/secondary/complete-todo.dto-port';
 
 @NgModule({
   providers: [
@@ -14,6 +13,10 @@ import { SAVES_TODO_TO_STORAGE_DTO } from '../../application/ports/secondary/sav
     },
     {
       provide: GETS_ALL_TODOS_DTO,
+      useExisting: HttpTodosService,
+    },
+    {
+      provide: COMPLETE_TODO_PORT,
       useExisting: HttpTodosService,
     },
   ],

@@ -16,6 +16,10 @@ import { ToggleTodoCommandPort } from '../ports/primary/toggle-todo.command-port
 import { map, Observable, take, tap } from 'rxjs';
 import { GetsAllTodosQueryPort } from '../ports/primary/gets-all-todos.query-port';
 import { TodoQuery } from '../ports/primary/todo-query';
+import {
+  COMPLETE_TODO_PORT,
+  CompleteTodoDtoPort,
+} from '../ports/secondary/complete-todo.dto-port';
 
 @Injectable()
 export class TodoListState
@@ -31,7 +35,9 @@ export class TodoListState
     @Inject(GETS_ALL_TODOS_DTO)
     private readonly _getAllTodosDto: GetsAllTodosDtoPort,
     @Inject(SAVES_TODO_TO_STORAGE_DTO)
-    private readonly _savesTodoToStorageDto: SavesValue<TodoDto[]>
+    private readonly _savesTodoToStorageDto: SavesValue<TodoDto[]>,
+    @Inject(COMPLETE_TODO_PORT)
+    private readonly _completeTodoPort: CompleteTodoDtoPort
   ) {}
 
   loadAllTodos(): void {
@@ -51,15 +57,20 @@ export class TodoListState
   }
 
   toggleTodo(id: string): void {
-    this._selectsTodoFromStorageDto
-      .select()
-      .pipe(take(1))
-      .subscribe((todos) => {
-        const updatedTodos = todos.map((todo) =>
-          todo.id === id ? { ...todo, done: !todo.done } : todo
-        );
-        this._savesTodoToStorageDto.save(updatedTodos);
-      });
+    console.log(id);
+    this._completeTodoPort.completeTodo(id).pipe(
+      tap(() => {
+        this._selectsTodoFromStorageDto
+          .select()
+          .pipe(take(1))
+          .subscribe((todos) => {
+            const updatedTodos = todos.map((todo) =>
+              todo.id === id ? { ...todo, done: !todo.done } : todo
+            );
+            this._savesTodoToStorageDto.save(updatedTodos);
+          });
+      })
+    ).subscribe()
   }
 
   getAll(): Observable<TodoQuery[]> {

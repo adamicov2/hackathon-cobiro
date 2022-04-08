@@ -88,9 +88,29 @@ export class HttpTodosService
         },
         { headers: this._header }
       )
-      .pipe(
-        tap(console.log),
-        map(() => payload[0].temp_id)
-      );
+      .pipe(map(() => payload[0].temp_id));
+  }
+
+  completeTodo(todoId: string): Observable<boolean> {
+    const payload = [
+      {
+        type: 'item_complete',
+        uuid: UUID(),
+        args: {
+          id: todoId,
+          date_completion: new Date(),
+        },
+      },
+    ];
+
+    return this._httpClient
+      .post(
+        `${this.baseUrl}/sync`,
+        {
+          commands: payload,
+        },
+        { headers: this._header }
+      )
+      .pipe(map(() => true));
   }
 }
