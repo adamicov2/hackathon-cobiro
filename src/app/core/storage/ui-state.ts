@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class UiState<T> {
   private readonly _value = new BehaviorSubject<T | null>(null)
-  constructor(initialState: T | null = null) {
+  constructor(public readonly initialState: T) {
     this._value.next(initialState);
   }
 

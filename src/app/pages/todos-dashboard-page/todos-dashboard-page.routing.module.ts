@@ -1,12 +1,12 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {TodosDashboardComponent} from "../todos-dashboard/todos-dashboard.component";
+import {TodosDashboardPageComponent} from "./todos-dashboard-page.component";
 
 @NgModule({
   imports: [RouterModule.forChild([
     {
       path: '',
-      component: TodosDashboardComponent
+      component: TodosDashboardPageComponent
     }
   ])],
 })

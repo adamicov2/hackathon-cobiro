@@ -12,6 +12,7 @@ class NgxBoostrapModalService implements ShowsModalCommandPort, HidesModalComman
 
   hide(modalId: string): void {
     this._modalsMap.get(modalId).hide();
+    this._modalsMap.delete(modalId);
   }
 
   show(templateRef: TemplateRef<unknown>, modalId: string): void {
@@ -22,7 +23,6 @@ class NgxBoostrapModalService implements ShowsModalCommandPort, HidesModalComman
 const BOOTSTRAP_MODAL_SERVICE = new InjectionToken<ShowsModalCommandPort & HidesModalCommandPort>('BOOTSTRAP_MODAL_SERVICE');
 
 @NgModule({
-  declarations: [],
   imports: [
     ModalModule.forRoot(),
     CommonModule

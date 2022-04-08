@@ -1,0 +1,18 @@
+<textarea class="mb-2 form-control" *ngIf="isInCreatingMode$ | async" [formControl]="todoMessage">
+</textarea>
+
+<div>
+  <button class="btn btn-success" (click)="onAddClicked()" *ngIf="!(isInCreatingMode$ | async)">
+    Add todo
+  </button>
+
+  <div class="d-flex" *ngIf="isInCreatingMode$ | async">
+    <button class="btn btn-success" (click)="onTodoSubmit()" >
+      Add todo
+    </button>
+    <button class="btn btn-outline-secondary ms-3" (click)="onCancelClicked()">
+      Cancel
+    </button>
+  </div>
+
+</div>

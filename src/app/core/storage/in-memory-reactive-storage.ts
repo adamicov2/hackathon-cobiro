@@ -1,14 +1,16 @@
-import {BehaviorSubject, Observable, shareReplay} from "rxjs";
+import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
 
 export interface SelectsValue<T> {
-  select(): Observable<T>
+  select(): Observable<T>;
 }
 
 export interface SavesValue<T> {
   save(value: T): void;
 }
 
-export class InMemoryReactiveStorage<T> implements SelectsValue<T>, SavesValue<T> {
+export interface ReactiveStorage<T> extends SelectsValue<T>, SavesValue<T> {}
+
+export class InMemoryReactiveStorage<T> implements ReactiveStorage<T> {
   private readonly _value = new BehaviorSubject<T | null>(null);
 
   constructor(readonly initialValue?: T) {
@@ -19,9 +21,7 @@ export class InMemoryReactiveStorage<T> implements SelectsValue<T>, SavesValue<T
     this._value.next(value);
   }
 
-
-  select(): Observable<T> {
-    return this._value.asObservable().pipe(shareReplay(1))
+  select(): Observable<T | null> {
+    return this._value.asObservable().pipe(shareReplay(1));
   }
-
 }
