@@ -1,1 +1,6 @@
-
+<app-todo-list-item
+  [todo]="todo"
+  (onToggleTodoStatus)="onToggleClick($event)"
+  *ngFor="let todo of todos$ | async; trackBy: trackById"
+>
+</app-todo-list-item>

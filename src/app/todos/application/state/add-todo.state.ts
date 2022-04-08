@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import {Observable, Subject, take, tap} from 'rxjs';
 import { AddsTodoCommandPort } from '../ports/primary/adds-todo.command-port';
 import {
   CREATE_TODO_DTO,
@@ -37,7 +37,7 @@ export class AddTodoState
     this._createsTodoDto.createTodo(message).subscribe((id: string) => {
       this._selectAllTodoFromStorage
         .select()
-        .pipe()
+        .pipe(take(1))
         .subscribe((allTodos) => {
           this._saveTodoToStorageDto.save([
             ...allTodos,

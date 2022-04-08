@@ -8,6 +8,7 @@ import { AddTodoStateModule } from './application/state/add-todo.state.module';
 import { HttpTodosServiceModule } from './adapters/secondary/http-todos.service-module';
 import { HttpClientModule } from '@angular/common/http';
 import { TodosInMemoryStorageModule } from './adapters/secondary/todos.in-memory-storage.module';
+import { TodoListStateModule } from './application/state/todo-list.state.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TodosInMemoryStorageModule } from './adapters/secondary/todos.in-memory
     AddTodoStateModule,
     HttpTodosServiceModule,
     HttpClientModule,
+    TodoListStateModule,
     TodosInMemoryStorageModule,
   ],
   exports: [TodosContainerComponent, TodoCreateWidgetComponent],

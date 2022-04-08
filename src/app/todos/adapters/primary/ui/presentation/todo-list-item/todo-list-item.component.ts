@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 interface TodoListItem {
   id: string;
-  name: string;
+  message: string;
   done: boolean;
 }
 
@@ -10,7 +10,7 @@ interface TodoListItem {
   selector: 'app-todo-list-item',
   templateUrl: './todo-list-item.component.html',
   styleUrls: ['./todo-list-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListItemComponent {
   @Input() todo: TodoListItem;

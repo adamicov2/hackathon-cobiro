@@ -53,10 +53,12 @@ export class TodoCreateWidgetComponent implements OnInit, OnDestroy {
 
   onTodoSubmit() {
     this._addsTodoCommandPort.addTodo(this.todoMessage.value);
+    this.todoMessage.reset();
   }
 
   onCancelClicked() {
     this._isInCreatingModeUiState.setState(false);
+    this.todoMessage.reset();
   }
 
   ngOnInit(): void {
