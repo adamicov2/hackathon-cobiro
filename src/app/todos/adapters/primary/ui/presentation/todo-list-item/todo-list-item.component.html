@@ -4,7 +4,7 @@
       <input
         class="form-check-input"
         type="checkbox"
-        [value]="todo.done"
+        [(ngModel)]="todo.done" [ngModelOptions]={standalone:true}
         (change)="onToggle()"
         id="flexCheckDefault"
       />
