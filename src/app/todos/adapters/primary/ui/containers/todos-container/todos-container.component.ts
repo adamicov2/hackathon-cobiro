@@ -36,9 +36,7 @@ const SHOW_INITIAL_VIEW_STATE = new InjectionToken<UiState<boolean>>(
   ],
 })
 export class TodosContainerComponent implements OnInit {
-  readonly todos$: Observable<TodoQuery[]> = this._getAllTodosQuery
-    .getAll()
-    .pipe(tap(console.log));
+  readonly todos$: Observable<TodoQuery[]> = this._getAllTodosQuery.getAll();
 
   constructor(
     @Inject(SHOW_INITIAL_VIEW_STATE)
@@ -51,9 +49,7 @@ export class TodosContainerComponent implements OnInit {
     private readonly _togglesTodoCommand: ToggleTodoCommandPort,
     @Inject(DELETE_TODO_COMMAND)
     private readonly _deletesTodoCommand: DeletesTodoCommandPort
-  ) {
-    this.todos$.subscribe(console.log);
-  }
+  ) {}
 
   ngOnInit(): void {
     this._loadAllTodosCommand.loadAllTodos();

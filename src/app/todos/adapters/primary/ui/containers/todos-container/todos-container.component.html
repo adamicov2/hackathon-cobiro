@@ -1,7 +1,3 @@
-<ng-container *ngIf="todos$ | async">
-
-</ng-container>
-
 <app-todo-list-item
   *ngFor="let todo of todos$ | async; trackBy: trackById"
   [todo]="todo"
