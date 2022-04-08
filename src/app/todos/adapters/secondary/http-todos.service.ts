@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CreatesTodoDtoPort } from '../../application/ports/secondary/creates-todo.dto-port';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable, of, tap, zip } from 'rxjs';
 import { TodoDto } from '../../application/ports/secondary/todo.dto';
 import { GetsAllTodosDtoPort } from '../../application/ports/secondary/gets-all-todos.dto-port';
 import { API_URL } from '../../../core/api/api-url';
@@ -48,23 +48,42 @@ export class HttpTodosService
   ) {}
 
   getAllTodos(): Observable<TodoDto[]> {
-    return this._httpClient
-      .get(`${this.baseUrl}/projects/get_data`, {
-        params: {
-          project_id: this.projectId,
-        },
-        headers: this._header,
-      })
-      .pipe(
-        map((response: any) => {
-          const items = response.items.map((item) => ({
-            id: String(item.id),
-            message: item.content,
-            done: item.date_completed !== null,
-          }));
-          return items;
+    return zip(
+      this._httpClient
+        .get(`${this.baseUrl}/completed/get_all`, {
+          headers: this._header,
         })
-      );
+        .pipe(
+          map((response: any) => {
+            const items = response.items.map((item) => ({
+              id: String(item.id),
+              message: item.content,
+              done: item.completed_date !== null,
+            }));
+            return items;
+          })
+        ),
+      this._httpClient
+        .get(`${this.baseUrl}/projects/get_data`, {
+          params: {
+            project_id: this.projectId,
+          },
+          headers: this._header,
+        })
+        .pipe(
+          map((response: any) => {
+            const items = response.items.map((item) => ({
+              id: String(item.id),
+              message: item.content,
+              done: item.date_completed !== null,
+            }));
+            return items;
+          })
+        )
+    ).pipe(
+      tap(console.log),
+      map(([items1, items2]) => [...items1, ...items2])
+    );
   }
 
   createTodo(message: string): Observable<string> {
